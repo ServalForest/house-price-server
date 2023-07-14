@@ -1,4 +1,5 @@
 from http import HTTPStatus
+import sys
 import socketserver
 import http.server
 from model import get_price
@@ -38,7 +39,12 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         self.wfile.write(output)
 
 
+port = 8000
+
+if len(sys.argv) > 1:
+    port = int(sys.argv[1])
+
 # Start the server
-httpd = socketserver.TCPServer(('', 8000), Handler)
-print('* Server started on port', 8000)
+httpd = socketserver.TCPServer(('', port), Handler)
+print('* Server started on port', port)
 httpd.serve_forever()
